@@ -34,9 +34,16 @@ namespace palugada_api.Controllers {
             return Ok(Order);
         }
 
+        [HttpGet("user/{userId:int}/get-range/{firstDate:datetime}/{lastDate:datetime}")]
+        public async Task<IActionResult> GetByRange(int userId, DateTime firstDate, DateTime lastDate) {
+            List<OrderHeaderDto> Order = await orderService.GetByRange(userId, firstDate, lastDate);
+            return Ok(Order);
+        }
+
+
         // GET api/<OrderController>/5
         [HttpGet("user/{userId:int}/{date:datetime}")]
-        public async Task<IActionResult> GetByMonthAndYear(int userId, DateTime date) {
+        public async Task<IActionResult> GetByExactDate(int userId, DateTime date) {
             List<OrderHeaderDto> Order = await orderService.GetByExactDate(userId, date);
             return Ok(Order);
         }

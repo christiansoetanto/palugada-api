@@ -121,6 +121,18 @@ namespace palugada_api.Services {
                     Date = e.Date,
                 }).ToListAsync();
         }
+
+        public async Task<List<OrderHeaderDto>> GetByRange(int userId, DateTime firstDate, DateTime lastDate) {
+            return await dbContext.OrderHeader
+                .Where(e => e.UserId == userId)
+                .Where(e => firstDate <= e.Date && e.Date <= lastDate)
+                .Select(e => new OrderHeaderDto {
+                    OrderHeaderId = e.OrderHeaderId,
+                    UserId = e.UserId,
+                    Title = e.Title,
+                    Date = e.Date,
+                }).ToListAsync();
+        }
         public async Task<List<OrderHeaderDto>> GetByExactDate(int userId, DateTime date) {
             return await dbContext.OrderHeader
                 .Include(e => e.OrderDetail)
